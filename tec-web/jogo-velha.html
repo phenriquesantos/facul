@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jogo da velha</title>
+    <style>
+        .jogada{
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    
+    <table class="content">
+        <tr>
+            <td>
+                <button class="jogada"></button>
+            </td>
+            <td>
+                <button class="jogada"></button>
+            </td>
+            <td>
+                <button class="jogada"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="jogada"></button>
+            </td>
+            <td>
+                <button class="jogada"></button>
+            </td>
+            <td>
+                <button class="jogada"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="jogada"></button>
+            </td>
+            <td>
+                <button class="jogada"></button>
+            </td>
+            <td>
+                <button class="jogada"></button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        var bo = document.querySelectorAll('.jogada');
+        var vez = true;
+        bo.forEach(b => {
+            b.addEventListener('click', function(){
+                b.disable = true;
+                if(vez){
+                    b.textContent = 'X';
+                    vez = false;
+                }else{
+                    b.textContent = 'O';
+                    vez = true;
+                }
+                contarGame();
+            });
+        });
+        function contarGame(){
+            if(bo[0].textContent == 'X' && bo[1].textContent == 'X' && bo[2].textContent == 'X' ||
+                bo[3].textContent == 'X' && bo[4].textContent == 'X' && bo[5].textContent == 'X' ||
+                bo[6].textContent == 'X' && bo[7].textContent == 'X' && bo[8].textContent == 'X' ||
+                bo[0].textContent == 'X' && bo[4].textContent == 'X' && bo[8].textContent == 'X' ||
+                bo[2].textContent == 'X' && bo[4].textContent == 'X' && bo[6].textContent == 'X'
+            ){
+                alert('X Venceu !!');
+                reset();
+            }
+
+            if(bo[0].textContent == 'O' && bo[1].textContent == 'O' && bo[2].textContent == 'O' ||
+                bo[3].textContent == 'O' && bo[4].textContent == 'O' && bo[5].textContent == 'O' ||
+                bo[6].textContent == 'O' && bo[7].textContent == 'O' && bo[8].textContent == 'O' ||
+                bo[0].textContent == 'O' && bo[4].textContent == 'O' && bo[8].textContent == 'O' ||
+                bo[2].textContent == 'O' && bo[4].textContent == 'O' && bo[6].textContent == 'O'
+            ){
+                alert('O Venceu !!');
+                reset();
+            }
+            
+            count = 0;
+            bo.forEach(b => {
+                if(b.textContent != ''){
+                    count++;
+                }
+            });
+            
+            if(count == 9){
+                alert('Velha');
+                reset();
+            }
+
+        
+        }
+        
+        function reset(){
+            bo.forEach(b => {
+                b.textContent = '';
+            });
+        }
+
+    </script>
+
+</body>
+</html>
