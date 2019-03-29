@@ -29,16 +29,12 @@ class Calendar():
                 self.mes += 1
             else:
                 self.dia += 1
-    
+
     def semana_que_vem(self):
-        
-        
+        pass
+
     def mes_que_vem(self):
         pass
 
-    def ano_que_vem(pass):
+    def ano_que_vem(self):
         self.ano += 1
-
-
-    
-
