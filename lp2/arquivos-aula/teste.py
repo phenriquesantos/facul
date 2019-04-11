@@ -9,9 +9,9 @@ class Cliente():
     Não é necessário implementar nenhum método para esta classe.
     """
     def __init__(self, nome_cliente, telefone_cliente, email_cliente):
-        self._nome = self.set_nome(nome_cliente)
-        self._email = self.set_email(email_cliente)
-        self._telefone = self.set_telefone(telefone_cliente)
+        self.set_nome(nome_cliente)
+        self.set_email(email_cliente)
+        self.set_telefone(telefone_cliente)
 
     def get_nome(self):
         return self._nome
@@ -26,7 +26,7 @@ class Cliente():
         if "@" in e:
             self._email = e
         else:
-            print("E-mail invalido ! :(")
+            print("C é burro cara !")
 
     def get_telefone(self):
         return self._telefone
@@ -35,7 +35,7 @@ class Cliente():
         if type(numero) == int:
             self._telefone = numero
         else:
-            print("Telefone invalido ! :(")
+            print("C é burro cara !")
 
 
 class Banco():
@@ -65,7 +65,7 @@ class Banco():
         pass
 
     def abre_contas(self, clientes, s_inicial):
-        conta_nova = Conta(clientes, len(self.lista_contas) + 1, s_inicial)
+        conta_nova = Conta(clientes, s_inicial, len(self.lista_contas) + 1)
         self.lista_contas.append(conta_nova)
 
     def lista_contas(self):
@@ -126,3 +126,5 @@ class Conta():
 
     def extrato(self):
         return self.get_transacoes()
+
+cliente = Cliente('Pedro', 1111111111, 'pedro')
