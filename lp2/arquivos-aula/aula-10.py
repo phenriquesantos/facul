@@ -31,7 +31,7 @@ class Aluno:
 
 
 class Professor(Pessoa):
-    def __init__(self, nome, idade, disciplina):
+    def __init__(self, nome, idade):
         # self._nome = nome
         # self._idade = idade
         super().__init__(nome, idade)
@@ -43,10 +43,17 @@ class Professor(Pessoa):
     def disciplina(self):
         return self._disciplina,
 
+    def get_nome(self):
+        return 'Professor ' + self._nome
+
+    def envelhece(self):
+        self._idade = self.get_idade() + 2
+
 
 if __name__ == '__main__':
     prof = Professor('Meu Pau', 18)
     prof.envelhece()
+    print(prof.get_idade())
     print(prof.get_nome())
     print(prof.get_idade())
     print(prof.disciplina())
