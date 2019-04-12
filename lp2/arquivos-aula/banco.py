@@ -233,21 +233,3 @@ class ContaCorrente(Conta):
             raise ValueError('Sem limite disponivel')
         else:
             super().saque(valor)
-
-
-if __name__ == '__main__':
-    cliente = Cliente('Flulando', 99999999, 'email@email.com.br')
-    conta = Conta([cliente], 1, 1200)
-    conta.set_saldo(2000)
-    conta.saque(1000)
-    conta.deposito(150)
-
-    contaC = ContaCorrente([cliente], 2, 1000, 10, 400)
-    contaC.saque(1400)
-    print(contaC.extrato())
-    contaC.cobra_juros()
-    print(contaC.extrato())
-
-    # contaP = ContaPoupanca([cliente], 2, 100000)
-
-    print(conta.get_saldo())
