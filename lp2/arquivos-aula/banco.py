@@ -112,58 +112,63 @@ class Conta():
     """
     def __init__(self, clientes: List[Cliente], numero_conta: int,
                  saldo_inicial: Number):
-        pass
+        self._clientes = clientes
+        self._numero = numero_conta
+        self._saldo = saldo_inicial
+        self._operacoes = [{'saldo inicial': saldo_inicial}]
 
     def get_clientes(self) -> List[Cliente]:
         '''
         Acessor para o atributo Clientes
         '''
-        pass
+        return self._clientes
 
     def get_saldo(self) -> Number:
         '''
         Acessor para o Atributo Saldo
         '''
-        pass
+        return self._saldo
 
     def set_saldo(self, novo_saldo: Number) -> None:
         '''
         Mutador para o atributo Saldo
         '''
-        pass
+        self._saldo = novo_saldo
 
     def get_numero(self) -> int:
         '''
         Acessor para o atributo Numero
         '''
-        pass
+        return self._numero
 
     def saque(self, valor: Number) -> None:
         '''
         Método de saque da classe Conta, operação deve aparecer no extrato
         '''
-        pass
+        self._saldo -= valor
+        self.inclui_operacao_extrato({'saque': valor})
 
     def deposito(self, valor: Number):
         '''
         Método depósito da classe Conta, operação deve aparecer no extrato
         '''
-        pass
+        self._saldo += valor
+        self.inclui_operacao_extrato({'deposito': valor})
 
     def inclui_operacao_extrato(self, operacao: Dict[str, Number]):
         '''
         Inclui operação na lista de operações da conta.
-        Uma operação é um dicionário onde a chave éum string com o nome
+        Uma operação é um dicionário onde a chave é um string com o nome
         da operação, e o valor e o valor da operação.
         ex: {'saque':100}, {'deposito': 250.10}
         '''
-        pass
+        self._operacoes.append(operacao)
 
     def extrato(self) -> List[Dict[str, Number]]:
         '''
         Retorna uma lista com as operações executadas na Conta
         '''
-        pass
+        return self._operacoes
 
 
 class ContaPoupanca(Conta):
@@ -172,7 +177,8 @@ class ContaPoupanca(Conta):
     '''
     def __init__(self, clientes: List[Cliente], numero: int,
                  saldo_inicial: Number, juros: Number) -> None:
-        pass
+        super().__init__(clientes, numero, saldo_inicial)
+        self._juros = juros
 
     def rendimentos(self) -> None:
         '''
@@ -180,7 +186,10 @@ class ContaPoupanca(Conta):
         com base no saldo e na taxa de juros. esta operação de aparecer
         no extrato: {'rendimentos': valor}
         '''
-        pass
+        if self._saldo > 0:
+            porcent_juros = (self.get_saldo() * self._juros) / 100
+            self.set_saldo(self.get_saldo() + porcent_juros)
+            self.inclui_operacao_extrato({'rendimentos': self._juros})
 
     def saque(self, valor: Number) -> None:
         '''
@@ -188,7 +197,10 @@ class ContaPoupanca(Conta):
         maior que o saldo da conta, devolve um ValueError
         Esta operação deve aparecer no extrato.
         '''
-        pass
+        if self._saldo > valor:
+            super().saque(valor)
+        else:
+            raise ValueError('Sem limite disponivel')
 
 
 class ContaCorrente(Conta):
@@ -197,14 +209,19 @@ class ContaCorrente(Conta):
     '''
     def __init__(self, clientes: List[Cliente], numero: int,
                  saldo_inicial: Number, juros: Number, limite: Number) -> None:
-        pass
+        super().__init__(clientes, numero, saldo_inicial)
+        self._juros = juros
+        self._limite = limite
 
     def cobra_juros(self) -> None:
         '''
         Cobra a taxa de juros da conta caso esteja dentro do cheque especial,
         esta operacao deve aparecer no extrato: {'juros': valor}
         '''
-        pass
+        if self._saldo < 0:
+            porcent_juros = ((self.get_saldo() * self._juros) / 100) * -1
+            self.set_saldo(self._saldo - porcent_juros)
+            self.inclui_operacao_extrato({'juros': porcent_juros})
 
     def saque(self, valor: Number) -> None:
         '''
@@ -212,4 +229,25 @@ class ContaCorrente(Conta):
         do cheque especial, caso contrário devolve um ValueError
         esta operação deve entrar no extrato
         '''
-        pass
+        if self._saldo - valor < self._limite * -1:
+            raise ValueError('Sem limite disponivel')
+        else:
+            super().saque(valor)
+
+
+if __name__ == '__main__':
+    cliente = Cliente('Flulando', 99999999, 'email@email.com.br')
+    conta = Conta([cliente], 1, 1200)
+    conta.set_saldo(2000)
+    conta.saque(1000)
+    conta.deposito(150)
+
+    contaC = ContaCorrente([cliente], 2, 1000, 10, 400)
+    contaC.saque(1400)
+    print(contaC.extrato())
+    contaC.cobra_juros()
+    print(contaC.extrato())
+
+    # contaP = ContaPoupanca([cliente], 2, 100000)
+
+    print(conta.get_saldo())
