@@ -44,7 +44,7 @@ INSERT INTO Produto(codigo, nome, estoque, descontinuado, idFornecedor, idCor) V
 INSERT INTO Produto(codigo, nome, estoque, descontinuado, idFornecedor, idCor) VALUES ('TF897A', 'Xperia', 7, 0, 1, 1);
 INSERT INTO Produto(codigo, nome, estoque, descontinuado, idFornecedor, idCor) VALUES ('RF212B', 'Moto Maxx', 2, 0, 2, 1);
 
-SELECT a.codigo, a.nome, a.estoque, b.idFornecedor, b.contato, b.telefone
+SELECT a.codigo, a.nome, a.estoque, b.nome, b.contato, b.telefone
 FROM Produto AS a
 INNER JOIN Fornecedor AS b
 ON a.idFornecedor = b.idFornecedor;
