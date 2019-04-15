@@ -49,4 +49,8 @@ FROM Produto AS a
 INNER JOIN Fornecedor AS b
 ON a.idFornecedor = b.idFornecedor;
 
-SELECT * FROM Fornecedor;
+select Produto.codigo, Produto.nome as 'Nome do Produto', Produto.estoque,
+		Fornecedor.nome, Fornecedor.contato, Fornecedor.telefone, Cor.Descricao
+FROM Produto JOIN Fornecedor 
+ON Produto.idFornecedor = Fornecedor.idFornecedor
+JOIN Cor ON Cor.idCor = Produto.idCor;	
