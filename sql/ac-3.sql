@@ -30,7 +30,7 @@ CREATE TABLE Veiculo(
     idVeiculo INT IDENTITY(1, 1) PRIMARY KEY,
     descricao VARCHAR(50),
     valor FLOAT NOT NULL,
-    CONSTRAINT idModelo FOREIGN KEY (idVeiculo)    Modelo (idModelo),
+    CONSTRAINT idModelo FOREIGN KEY (idVeiculo) REFERENCES Modelo (idModelo),
     CONSTRAINT idFabricante FOREIGN KEY (idVeiculo) REFERENCES Fabricante (idFabricante),
     CONSTRAINT idAnoFabricacao FOREIGN KEY (idVeiculo) REFERENCES Ano (idAno),
     dataCompra DATE NOT NULL
